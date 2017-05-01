@@ -1,11 +1,9 @@
-require 'httparty'
-
-
-
-
 class SlackChannel
   class SlackException < RuntimeError
   end
+
+  BASE_URL = "https://slack.com/api/"
+
   attr_reader :name, :raw_data
 
   def initialize(data)
@@ -17,7 +15,7 @@ class SlackChannel
     # URL from Slack API: https://slack.com/api/chat.postMessage
     # have to go look up SLACK to find the postMessage URL
     query_params = {
-                      "token" => TOKEN,
+                      "token" => ENV["SLACK_API_TOKEN"],
                       "channel" => @name,
                       "text" => message,
                       "username" => "Dancing-Corgi",
@@ -37,7 +35,7 @@ class SlackChannel
   # list all the channels
   # full URL from Slack API doc: https://slack.com/api/channels.list
   def self.all
-    url = "#{BASE_URL}channels.list?token=#{TOKEN}"
+    url = "#{BASE_URL}channels.list?token=#{ENV["SLACK_API_TOKEN"]}"
     response = HTTParty.get(url).parsed_response
     if response["ok"]
        channel_list = []

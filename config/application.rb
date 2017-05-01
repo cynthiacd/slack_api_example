@@ -14,5 +14,9 @@ module SlackApiExample
     config.generators do |g|
       g.test_framework :minitest, spec: true
     end
+
+    # Tell Rails to auto load any .rb files
+    # it finds int the 'lib' director
+    config.autoload_paths << Rails.root.join("lib")
   end
 end
