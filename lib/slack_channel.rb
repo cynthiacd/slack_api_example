@@ -4,11 +4,11 @@ class SlackChannel
 
   BASE_URL = "https://slack.com/api/"
 
-  attr_reader :name, :raw_data
+  attr_reader :name
 
-  def initialize(data)
-    @name = data["name"]
-    @raw_data = data
+  def initialize(name)
+    @name = name
+    # @raw_data = data
   end
 
   def send(message)
@@ -40,7 +40,7 @@ class SlackChannel
     if response["ok"]
        channel_list = []
        response["channels"].each do |channel_data|
-         channel_list << self.new(channel_data)
+         channel_list << self.new(channel_data["name"])
        end
        return channel_list
     else
