@@ -10,6 +10,8 @@ class ChatsController < ApplicationController
   end
 
   def send_message
+    channel = SlackChannel.new(params[:channel])
+    channel.send(params[:message])
+    redirect_to chats_path
   end
-
 end
